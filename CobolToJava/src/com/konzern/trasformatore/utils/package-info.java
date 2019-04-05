@@ -5,4 +5,4 @@
  * @author Konzernites
  *
  */
-package com.trasformatore.konzern.utils;
+package com.konzern.trasformatore.utils;

@@ -7,7 +7,7 @@
  * 
  * location : E:\PROXIMOTECH\cobol_to_java_convertor\input_files </p>
  */
-package com.trasformatore.konzern.utils;
+package com.konzern.trasformatore.utils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
