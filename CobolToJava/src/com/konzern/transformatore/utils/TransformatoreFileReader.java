@@ -9,7 +9,7 @@
  * 
  * location : E:\PROXIMOTECH\cobol_to_java_convertor\input_files </p>
  */
-package com.konzern.trasformatore.utils;
+package com.konzern.transformatore.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,7 +36,8 @@ public class TransformatoreFileReader implements TransformatoreFileReaderInf {
 	}
 
 	/**
-	 * <p> To Read all cobol files in a particular directory
+	 * <p>
+	 * To Read all cobol files in a particular directory
 	 * 
 	 * @param location
 	 * @param characterEncoding
@@ -44,18 +45,16 @@ public class TransformatoreFileReader implements TransformatoreFileReaderInf {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static Map<String, BufferedReader> creatInputFiles(String location, String characterEncoding) throws FileNotFoundException, IOException {
+	public static Map<String, BufferedReader> creatInputFiles(String location, String characterEncoding)
+			throws FileNotFoundException, IOException {
 
 		File fileDirectory = new File(location);
 		for (File filePath : fileDirectory.listFiles()) {
 			BufferedReader br = null;
-			try (FileReader fr = new FileReader(filePath.getAbsolutePath())) {
-				br = new BufferedReader(fr);
-				fileInputs.put(filePath.getName(),br);
-				if(null!=br) {
-					br.close();
-				}
-			} 
+			FileReader fr = new FileReader(filePath.getAbsolutePath());
+			br = new BufferedReader(fr);
+
+			fileInputs.put(filePath.getName(), br);
 
 		}
 		return fileInputs;
@@ -66,9 +65,10 @@ public class TransformatoreFileReader implements TransformatoreFileReaderInf {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		try {
-			Map<String, BufferedReader> i = creatInputFiles("E:\\PROXIMOTECH\\cobol_to_java_convertor\\input_files", "ASCII");
+			Map<String, BufferedReader> i = creatInputFiles("E:\\PROXIMOTECH\\cobol_to_java_convertor\\input_files",
+					"ASCII");
 			System.out.println(i);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
