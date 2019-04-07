@@ -12,6 +12,7 @@ import java.util.Map;
 
 import com.konzern.transformatore.cobol.CobolConstants;
 import com.konzern.transformatore.cobol.IdentificationDivision;
+import com.konzern.transformatore.java.JavaPojo;
 
 /**
  * @author konzerntech
@@ -23,10 +24,17 @@ public class CodeIndentifier {
 	private BufferedReader bufferedReader = null;
 	private Map<String, List<String>> codeBlocks = null;
 	
+	private JavaPojo javaPojo = null;
+	
 	private IdentificationDivision identificationDivision = null;
 
 	public CodeIndentifier(BufferedReader bufferedReader) {
 		this.bufferedReader = bufferedReader;
+		intialize();
+	}
+
+	private void intialize() {
+		javaPojo = new JavaPojo();
 	}
 
 	/**
@@ -60,9 +68,11 @@ public class CodeIndentifier {
 
 	private void codeConstructor(String key, List<String> elements) {
 		// TODO Auto-generated method stub
+		
 		switch (key) {
 		case "IDENTIFICATION DIVISION.":
 			 identificationDivision = new IdentificationDivision(key, elements);
+			 identificationDivision.setJavaPojo(javaPojo);
 			 identificationDivision.getConvertedCode();
 			break;
 
