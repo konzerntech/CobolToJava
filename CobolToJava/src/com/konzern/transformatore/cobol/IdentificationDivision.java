@@ -1,11 +1,16 @@
 /**
+ * IdentificationDivision.java
  * 
+ * <p> This class corresponds to the Identification Division in COBOL <p>
  */
 package com.konzern.transformatore.cobol;
 
 import java.util.List;
 
+import org.omg.CORBA.INITIALIZE;
+
 import com.konzern.transformatore.java.JavaNamingUtiltiy;
+import com.konzern.transformatore.java.JavaPojo;
 
 /**
  * @author konzernites
@@ -17,6 +22,7 @@ public class IdentificationDivision {
 	private String functionName = null;
 	private List<String> codes = null;
 	private JavaNamingUtiltiy namingUtility = null;
+	private JavaPojo javaPojo = null;
 	
 	public IdentificationDivision() {
 	}
@@ -37,12 +43,28 @@ public class IdentificationDivision {
 		
 		for(String code : codes) {
 			if(code.contains("PROGRAM-ID")) {
-				String name = code.replace("PROGRAM-ID.", "").replace(".", "");
-				System.out.println(" public class "+getNamingUtility().createClassName(name));
-				
+				String className = getProgramId(code);
+				javaPojo.setClassName(className);
 			}
 		}
 		
+	}
+
+	/**
+	 * <p> Rules for getting program Id from cobol code
+	 * program Id = class Name in java </p>
+	 * 
+	 * @param cobolCode
+	 * @return className in java
+	 */
+	private String getProgramId(String cobolCode) {
+		String name = cobolCode.replace("PROGRAM-ID.", "").replace(".", "");
+		System.out.println(" public class "+getNamingUtility().createClassName(name));
+		return getNamingUtility().createClassName(name);
+	}
+
+	public void setJavaPojo(JavaPojo javaPojo) {
+		this.javaPojo = javaPojo;
 	}
 
 }
