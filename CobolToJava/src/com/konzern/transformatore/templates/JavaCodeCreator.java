@@ -1,7 +1,10 @@
 /**
  * JavaCodeCreator.java
+ * 
+ * For Creation JavaCode from JavaPojo
  */
 package com.konzern.transformatore.templates;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,21 +31,23 @@ import freemarker.template.TemplateNotFoundException;
  * @version 1.0
  *
  */
-public class JavaCodeCreator {
-	
+public class JavaCodeCreator extends JavaTemplate {
+
 	private Configuration cfg = null;
 	private Template template = null;
-	private String fileLocation = "E:\\\\PROXIMOTECH\\\\cobol_to_java_convertor\\\\output_files\\\\JavaCodeTemplate.txt";
+	private String fileLocation = "E:\\PROXIMOTECH\\cobol_to_java_convertor\\output_files\\";
 	private JavaPojo javaPojo = null;
 	private Map<String, Object> data = null;
 
 	public JavaCodeCreator(String fileLocation) {
-		
 		this.fileLocation = fileLocation;
 		intitalize();
 	}
-	
-	
+
+	private String getFileName() {
+		return javaPojo.getClassName() + fileExtention;
+	}
+
 	public void setJavaPojo(JavaPojo javaPojo) {
 		this.javaPojo = javaPojo;
 	}
@@ -65,39 +70,34 @@ public class JavaCodeCreator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void createJavaCode() {
 		data.put("className", javaPojo.getClassName());
-		
+
 		writeJavaCode();
-		
+
 	}
 
 	private void writeJavaCode() {
-		// TODO Auto-generated method stub
-		
+
 		try {
 			Writer out = new OutputStreamWriter(System.out);
 			template.process(data, out);
 			out.flush();
-			
-			Writer file = new FileWriter (new File("E:\\PROXIMOTECH\\cobol_to_java_convertor\\output_files\\FTL_helloworld.txt"));
+			File javaFile = new File(fileLocation + "" + getFileName());
+			Writer file = new FileWriter(javaFile);
 			template.process(data, file);
 			file.flush();
 			file.close();
 		} catch (TemplateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-	}
 
+	}
 
 	/**
 	 * @param args

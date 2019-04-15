@@ -28,41 +28,42 @@ public abstract class Cobol {
 	
 	static {
 		cobolDivisions = new ArrayList<>();
-		
 		for(CobolDivision cobolDivison : CobolDivision.values()) {
 			cobolDivisions.add(cobolDivison.getDivision());
 		}
-		
-/*
-		
-		cobolDivisions.add("IDENTIFICATION DIVISION.");
-		cobolDivisions.add("DATA DIVISION.");
-		cobolDivisions.add("PROCEDURE DIVISION.");
-		cobolDivisions.add("ENVIRONMENT DIVISION.");*/
 	}
 	
-	
+	/**
+	 * <p> To initialize the code block Map if necessary </p>
+	 * 
+	 * @return Map<String,List<String>>
+	 */
+	private  Map<String,List<String>> getCodeBlocks() {
+		if(null==codeBlocks) {
+			codeBlocks = new HashMap<>();
+		}
+		return codeBlocks;
+	}
 
 
 	/**
 	 * <p> split the COBOL code based on the division </p>
 	 * 
 	 * @param bufferedReader
-	 * @return
-	 * @throws IOException
+	 * @return codeBlocks
+	 * @throws IOException, IllegalArgumentException
 	 */
 	public Map<String,List<String>> divisionIdentifier(BufferedReader bufferedReader) throws IOException {
 		
 		if(null==bufferedReader) {
 			throw new IllegalArgumentException();
 		}
-		
-		codeBlocks  = new HashMap<>();
+		codeBlocks = getCodeBlocks();
 		String line = null;
 		List<String> elements = null;
 		String key = null;
 		while (null != (line = bufferedReader.readLine())) {
-			if (CobolConstants.divisionIdentifier.contains(line)) {
+			if (cobolDivisions.contains(line)) {
 				if (null != elements) {
 					codeBlocks.put(key, elements);
 				}
@@ -76,5 +77,4 @@ public abstract class Cobol {
 		return codeBlocks;
 	}
 	
-
 }
