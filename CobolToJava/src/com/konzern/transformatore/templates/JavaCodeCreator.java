@@ -75,6 +75,7 @@ public class JavaCodeCreator extends JavaTemplate {
 
 	public void createJavaCode() {
 		data.put("className", javaPojo.getClassName());
+		data.put("authorName", javaPojo.getAuthorName());
 
 		writeJavaCode();
 

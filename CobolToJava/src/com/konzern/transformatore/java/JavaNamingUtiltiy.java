@@ -37,4 +37,11 @@ public class JavaNamingUtiltiy {
 
 	}
 
+	public String createAuthorName(String authorName) {
+		if(null!=authorName && !authorName.isEmpty()) {
+			return authorName;
+		}
+		return "";
+	}
+
 }

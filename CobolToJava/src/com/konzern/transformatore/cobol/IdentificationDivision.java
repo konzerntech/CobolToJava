@@ -76,10 +76,61 @@ public class IdentificationDivision extends CobolDivision implements CobolDivisi
 		}
 		cobolCode.forEach(cobolLine -> {
 			if (null != cobolLine && !cobolLine.isEmpty()) {
-				String[] cobolLex = cobolLine.split("\\s");
+				String[] cobolLexicals = cobolLine.split("\\s");
+				findKeywords(cobolLexicals[0], cobolLexicals);
 			}
 		});
 		return javaPojo;
+	}
+
+	private void findKeywords(String keyword, String[] cobolLexicals) {
+		
+		switch (keyword) {
+		case "PROGRAM-ID.":
+			String className = getProgramId(cobolLexicals);
+			javaPojo.setClassName(className);
+			break;
+
+		case "AUTHOR.":
+			String authorName = getAuthorName(cobolLexicals);
+			javaPojo.setAuthorName(authorName);
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * getting the author name from Cobol Code for converting it to java code
+	 * </p>
+	 * 
+	 * @param cobolLexicals
+	 * @return
+	 */
+	private String getAuthorName(String[] cobolLexicals) {
+		if (null == cobolLexicals[1]) {
+			throw new IllegalArgumentException();
+		}
+		return getNamingUtility().createAuthorName(cobolLexicals[1]);
+	}
+
+	/**
+	 * <p>
+	 * getting the program Id from Cobol Code and converting it java code
+	 * </p>
+	 * 
+	 * @param cobolLexicals
+	 * @return
+	 */
+	private String getProgramId(String[] cobolLexicals) {
+		if (null == cobolLexicals[1]) {
+			throw new IllegalArgumentException();
+		}
+		return getNamingUtility().createClassName(cobolLexicals[1]);
 	}
 
 }
